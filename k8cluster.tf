@@ -1,10 +1,16 @@
 # Kubernetes cluster creation
 #
 
-# Resource group for kube
+# Resource group for kube cluster
 resource "azurerm_resource_group" "k8s_rg" {
-  name     = "k8s_RG1"
-  location = var.azure_region
+  name     = var.rg_k8s
+  location = var.az_region
+
+  # Add tags: project, author
+  tags = {
+    author = var.author
+    project = var.project
+  }
 }
 
 # cluster creation
@@ -20,22 +26,15 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count      = 2
   }
 
+  # secrets (use terraform.tfvars file)
   service_principal {
     client_id     = var.client_id
     client_secret = var.client_secret
   }
 
+  # Add tags: project, author
   tags = {
-    environment = var.environment
-    owner = var.owner
+    author = var.author
+    project = var.project
   }
 }
-
-#output "client_certificate" {
-#  value = "${azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate}"
-#}
-#
-#output "kube_config" {
-#  value = "${azurerm_kubernetes_cluster.k8s.kube_config_raw}"
-#}
-

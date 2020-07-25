@@ -26,9 +26,11 @@ resource "azurerm_virtual_network" "Vnet" {
   }
 
   # Include Resource group 
-  depends_on = [ azurerm_resource_group.rg, ]
+  depends_on = [ azurerm_resource_group.rg ]
+ 
+  # Add tags: project, author 
   tags = {
-    environment = var.environment
-    owner = var.owner
+    author = var.author
+    project = var.project
   }
 }

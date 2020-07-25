@@ -8,21 +8,27 @@ variable "client_secret"{}
 variable "tenant_id"{}
 
 # Default region
-variable "azure_region" {
+variable "az_region" {
   default = "West Europe"
 }
 
 # Resource group
-variable "rgname" {
+variable "rg_name" {
+  default = "az_RG"
+}
+
+# Resource group for kubernetes cluster
+variable "rg_k8s" {
   default = "K8s_RG"
 }
 
-# Environment name
-variable "environment" {
-  default =   "LAB"
+# Describe tags
+# Author name tag
+variable "author" {
+  default =   "Evgeniy_Naryshkin.aurcame"
 }
 
-# Author name
-variable "owner" {
-  default =   "EvgeniyNaryshkin.aurcame"
+# Project tag
+variable "project" {
+  default =   "LAB_TF_AZ_K8s"
 }

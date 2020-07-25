@@ -2,12 +2,13 @@
 #
 
 resource "azurerm_resource_group" "rg" {
-  name     = var.rgname
-  location = var.azure_region
+  name     = var.rg_name
+  location = var.az_region
 
+  # Add tags: project, author
   tags = {
-    environment = var.environment
-    owner = var.owner
+    author = var.author
+    project = var.project
   }
 }
 
