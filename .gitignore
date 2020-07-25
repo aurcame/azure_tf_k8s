@@ -8,6 +8,10 @@ terraform.tfvars
 # ignore swap files
 *.swp 
 
+# ignore screenshots
+az-tf-k8s-scheme.jpg
+votes-app-interface.jpg
+
 # Local .terraform directories
 **/.terraform/*
 
