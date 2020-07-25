@@ -22,6 +22,25 @@ variable "rg_k8s" {
   default = "K8s_RG"
 }
 
+# Dns prefix for kubernetes cluster
+variable "dns_prefix" {
+  default = "evn"
+}
+
+variable log_analytics_workspace_name {
+    default = "K8s_LogAnalyticsWorkspaceName"
+}
+
+# refer https://azure.microsoft.com/global-infrastructure/services/?products=monitor for log analytics available regions
+variable log_analytics_workspace_location {
+    default = "eastus"
+}
+
+# refer https://azure.microsoft.com/pricing/details/monitor/ for log analytics pricing 
+variable log_analytics_workspace_sku {
+    default = "PerGB2018"
+}
+
 # Describe tags
 # Author name tag
 variable "author" {
