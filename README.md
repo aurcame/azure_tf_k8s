@@ -6,45 +6,47 @@
 
 ## About:
 
-This Terraform code deploys Azure Kubernetes infrastructure and Kubernetes cluster using Azure Kubernetes Service
-All the parameters listed in *variables.tf* file
+This Terraform code deploys Azure infrastructure and Kubernetes cluster using Azure Kubernetes Service
+All the parameters listed in *variables.tf* file.
 
-To connect to Your Azure Subscribtion You must add *terraform.tfvars* file including next info substituted with Your private params:
+To connect to Your Azure Subscribtion You must add *terraform.tfvars* file that includes Your secrets:
 
 ```sh
-    subscription_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-    client_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-    client_secret = "some-combination-of-symbols"
-    tenant_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+subscription_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+client_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+client_secret = "some-combination-of-symbols"
+tenant_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
+
+***Find below instructions, how to get secrets.***
 
 ## Howto set up Azure storage to store Terraform state
 ## Select Storage accounts.
 
-On the Subscriptions service find Subscription ID.
+On the Subscriptions service find **Subscription ID*.
 
 Login to your Azure account and go to Cloud Shell console. Specify your Subscription to use via the following command:
 
 ```sh
-    az account set --subscription="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+az account set --subscription="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
-and create the Service Principal which will have permissions to manage resources in the specified Subscription using the following command:
+and create the **Service Principal** which will have permissions to manage resources in the specified Subscription using the following command:
     
 ```sh
-    az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
 This command will output 5 values:
 
 ```sh
-    {
-    "appId": "00000000-0000-0000-0000-000000000000",
-    "displayName": "azure-cli-2017-06-05-10-41-15",
-    "name": "http://azure-cli-2017-06-05-10-41-15",
-    "password": "0000-0000-0000-0000-000000000000",
-    "tenant": "00000000-0000-0000-0000-000000000000"
-    }
+{
+  "appId": "00000000-0000-0000-0000-000000000000",
+  "displayName": "azure-cli-2017-06-05-10-41-15",
+  "name": "http://azure-cli-2017-06-05-10-41-15",
+  "password": "0000-0000-0000-0000-000000000000",
+  "tenant": "00000000-0000-0000-0000-000000000000"
+}
 ```
 
 *appId* is the **client_id** defined in *terraform.tfvars* file above.
@@ -58,22 +60,42 @@ This command will output 5 values:
 From Azure cli clone the repository [azure_tf_k8s repo](https://github.com/aurcame/azure_tf_k8s):
 
 ```sh 
-    git clone https://github.com/aurcame/azure_tf_k8s.git
-    cd azure_tf_k8s
-    terraform init
+git clone https://github.com/aurcame/azure_tf_k8s.git
+cd azure_tf_k8s
+terraform init
 ```
 
 Run the terraform plan command to create the Terraform plan that defines the infrastructure elements
 
 ```sh
-    terraform plan
+terraform plan
 ```
 
 Apply terraform manifests:
 
 ```sh
-    terraform apply
+terraform apply
 ```
 
 #### Done. 
 Check all the resources created for your new Kubernetes cluster. Goto the Azure portal and select All resources in the left menu.
+
+## Deploying test web application in K8s cluster:
+
+```sh
+kubectl apply -f azure-vote.yaml
+```
+
+## Test the application
+
+When the application runs, a Kubernetes service exposes the application front end to the internet. This process can take a few minutes to complete.
+
+To monitor progress, use the kubectl get service command with the --watch argument.
+
+```sh
+kubectl get service azure-vote-front --watch
+```
+
+When the EXTERNAL-IP address changes from pending to an actual public IP address. Use it to see the Azure Vote app in action, open a web browser to the external IP address of your service.
+
+<img width="1024" alt="Vote web app interface" src="vote-app-interface.jpg">
