@@ -77,13 +77,19 @@ Apply terraform manifests:
 terraform apply
 ```
 
+Get credentials for created cluster
+
+```sh
+az aks get-credentials --resource-group K8s_RG --name k8s_cluster
+```
+
 #### Done. 
 Check all the resources created for your new Kubernetes cluster. Goto the Azure portal and select All resources in the left menu.
 
 ## Deploying test web application in K8s cluster:
 
 ```sh
-kubectl apply -f azure-vote.yaml
+kubectl create -f votes-app/votes-app.yaml
 ```
 
 ## Test the application
@@ -96,6 +102,6 @@ To monitor progress, use the kubectl get service command with the --watch argume
 kubectl get service azure-vote-front --watch
 ```
 
-When the EXTERNAL-IP address changes from pending to an actual public IP address. Use it to see the Azure Vote app in action, open a web browser to the external IP address of your service.
+When the EXTERNAL-IP address changes from pending to an actual public IP address, you can use it to see the Azure Vote app in action, open a web browser to the external IP address of your service.
 
-<img width="1024" alt="Vote web app interface" src="vote-app-interface.jpg">
+<img width="1024" alt="Votes web-app interface" src="votes-app-interface.jpg">
