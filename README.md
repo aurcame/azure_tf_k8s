@@ -2,7 +2,7 @@
 
 #### GL DevOps Pro Camp. Work by Evgeniy Naryshkin
 
-<img width="1024" alt="Azure Terraform Kubernetes principal Scheme" src="az-tf-k8s-scheme.jpg">
+<img alt="Azure Terraform Kubernetes principal Scheme" src="az-tf-k8s-scheme.jpg">
 
 ## About:
 
@@ -104,4 +104,4 @@ kubectl get service azure-vote-front --watch
 
 When the EXTERNAL-IP address changes from pending to an actual public IP address, you can use it to see the Azure Vote app in action, open a web browser to the external IP address of your service.
 
-<img width="1024" alt="Votes web-app interface" src="votes-app-interface.jpg">
+<img alt="Votes web-app interface" src="votes-app-interface.jpg">
