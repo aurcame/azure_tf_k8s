@@ -18,20 +18,20 @@ resource "random_id" "log_analytics_workspace_name_suffix" {
     byte_length = 8
 }
 
-resource "azurerm_log_analytics_workspace" "K8s_WS" {
-    # The WorkSpace name has to be unique across the whole of azure, not just the current subscription/tenant.
+resource "azurerm_log_analytics_workspace" "k8s_ws" {
+    # The WorkSpace name has to be unique across the whole of azure
     name                = "${var.log_analytics_workspace_name}-${random_id.log_analytics_workspace_name_suffix.dec}"
     location            = var.log_analytics_workspace_location
-    resource_group_name = azurerm_resource_group.K8s_RG.name
+    resource_group_name = azurerm_resource_group.k8s_rg.name
     sku                 = var.log_analytics_workspace_sku
 }
 
-resource "azurerm_log_analytics_solution" "K8s_AS" {
+resource "azurerm_log_analytics_solution" "k8s_as" {
     solution_name         = "ContainerInsights"
-    location              = azurerm_log_analytics_workspace.K8s_WS.location
-    resource_group_name   = azurerm_resource_group.K8s_RG.name
-    workspace_resource_id = azurerm_log_analytics_workspace.K8s_WS.id
-    workspace_name        = azurerm_log_analytics_workspace.K8s_WS.name
+    location              = azurerm_log_analytics_workspace.k8s_ws.location
+    resource_group_name   = azurerm_resource_group.k8s_rg.name
+    workspace_resource_id = azurerm_log_analytics_workspace.k8s_ws.id
+    workspace_name        = azurerm_log_analytics_workspace.k8s_ws.name
 
     plan {
         publisher = "Microsoft"
@@ -63,7 +63,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   addon_profile {
         oms_agent {
         enabled                    = true
-        log_analytics_workspace_id = azurerm_log_analytics_workspace.K8s_WS.id
+        log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s_ws.id
         }
     }
 

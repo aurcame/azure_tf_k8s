@@ -28,7 +28,7 @@ variable "dns_prefix" {
 }
 
 variable log_analytics_workspace_name {
-    default = "K8s_LogAnalyticsWorkspaceName"
+    default = "K8sLogAnalyticsWorkspaceName"
 }
 
 # refer https://azure.microsoft.com/global-infrastructure/services/?products=monitor for log analytics available regions
